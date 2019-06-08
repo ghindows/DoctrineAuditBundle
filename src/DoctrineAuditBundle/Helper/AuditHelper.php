@@ -94,8 +94,14 @@ class AuditHelper
             ) {
                 $mapping = $meta->fieldMappings[$fieldName];
                 $type = Type::getType($mapping['type']);
+
                 $o = $this->value($em, $type, $old);
                 $n = $this->value($em, $type, $new);
+
+                if(in_array($type, ['float','decimal']) && abs(floatval($o)-floatval($n)) < 0.001 ) {
+                    $n = $o;
+                }
+
             } elseif (
                 $meta->hasAssociation($fieldName) &&
                 $meta->isSingleValuedAssociation($fieldName) &&
