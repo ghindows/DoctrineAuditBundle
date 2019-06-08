@@ -100,7 +100,7 @@ class AuditHelper
                 $o = $this->value($em, $type, $old);
                 $n = $this->value($em, $type, $new);
 
-                if(in_array($type, [DecimalType::class,FloatType::class]) && abs(floatval($o)-floatval($n)) < 0.001 ) {
+                if(in_array($type->getName(), [Type::DECIMAL, Type::FLOAT]) && abs(floatval($o)-floatval($n)) < 0.001 ) {
                     $n = $o;
                 }
 
