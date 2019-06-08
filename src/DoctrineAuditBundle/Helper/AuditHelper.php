@@ -4,6 +4,8 @@ namespace DH\DoctrineAuditBundle\Helper;
 
 use DH\DoctrineAuditBundle\AuditConfiguration;
 use DH\DoctrineAuditBundle\User\UserInterface;
+use Doctrine\DBAL\Types\DecimalType;
+use Doctrine\DBAL\Types\FloatType;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 
@@ -98,7 +100,7 @@ class AuditHelper
                 $o = $this->value($em, $type, $old);
                 $n = $this->value($em, $type, $new);
 
-                if(in_array($type, ['float','decimal']) && abs(floatval($o)-floatval($n)) < 0.001 ) {
+                if(in_array($type, [DecimalType::class,FloatType::class]) && abs(floatval($o)-floatval($n)) < 0.001 ) {
                     $n = $o;
                 }
 
